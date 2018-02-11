@@ -35,7 +35,7 @@ public class PrimeFilter extends SimpleGenerator
 	public void onIntEvent(IntEvent event) {
         if (!divisor.isPresent()) {
             divisor = Optional.of(event.getValue());
-            //send(event);
+            send(event);
         } else {
             test = Optional.of(event.getValue());
         }
@@ -46,14 +46,19 @@ public class PrimeFilter extends SimpleGenerator
 	    if (!divisor.isPresent()) { return;}
 	    if (!test.isPresent()) { return;}
 
-	    if (divisor.get().mod(test.get()) == new BigInteger(String.valueOf(0))) { }
+	    if (test.get().mod(divisor.get()).equals(BigInteger.ZERO)) {
+	    	return;
+	    }
 	    else {
 	        if (next.isPresent()) {
                 next.get().onIntEvent(new IntEvent(test.get()));
                 next.get().activate();
             } else {
-	            next = Optional.of(new PrimeFilter());
-	            next.get().onIntEvent(new IntEvent(test.get()));
+            	PrimeFilter tmp = new PrimeFilter();
+            	tmp.receivers = this.receivers;
+	            next = Optional.of(tmp);
+	            IntEvent try_test = new IntEvent(test.get());
+	            next.get().onIntEvent(try_test);
             }
         }
 	}

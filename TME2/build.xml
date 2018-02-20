@@ -7,8 +7,8 @@
   <property name="build" location="build"/>
 
   <!-- METTRE ICI LE NOM DU BINOME -->
-  <property name="nom1" value="XXXXX"/>
-  <property name="nom2" value="YYYYY"/>
+  <property name="nom1" value="Doussot"/>
+  <property name="nom2" value="Rudat"/>
 
   <target name="init">
     <!-- Create the time stamp -->
@@ -28,8 +28,8 @@
     <!--<echo>================ Run Maleva simulator ================</echo>-->
     <java classname="maleva.proiepred.MalevaTest2" classpath="${build}">
        <arg value="200" description="numSteps"/>
-       <arg value="2" description="numMechants"/>
-       <arg value="3" description="numTrouillards"/>
+       <arg value="3" description="numMechants"/>
+       <arg value="5" description="numTrouillards"/>
     </java>
   </target>
 

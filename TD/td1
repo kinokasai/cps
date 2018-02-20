@@ -1,0 +1,45 @@
+Service Compte
+
+Observators:
+  const nom: [Compte] -> String
+  const number: [Compte] -> int
+  solde: [Compte] -> double
+  montant_decouvert: [Compte] -> double
+    pre montant_decouvert(compte) require est_decouvert(c)
+  est_decouvert: [Compte] -> boolean
+  const limite: [Compte] -> double
+  peut_prelever: [Compte] * double -> boolean
+    pre peut_prelever(this, amount) require amount > 0
+
+Constructors:
+  init String * int * double -> Compte
+    pre init(name, num, limite) require limite > 9 and name != "" and num > 0
+  init Compte -> [Compte]
+
+Operators:
+  depot: [Compte] * double -> [Compte]
+    pre depot(this, amount) require amount > 0
+  retrait: [Compte] * double -> [Compte]
+    pre retrait(this, amount) require peut_prelever(this, amount)
+
+Observations:
+[invariants]
+  montant_decouvert(compte) <= limite(compte)
+  montant_decouvert(compte) =(min)= - solde(compte)
+  est_decouvert(compte) =(min)= solde(compte) < 0
+  peut_prelever(compte, amount) =min= solde(compte) + limite(compte) - amount >= 0
+[depot]
+  solde(depot(Compte, amount)) = solde(Compte) + amount
+[retrait]
+  solde(retrait(Compte, amount)) = solde(compte) - amount
+[init]
+  {
+    nom(init(name, num, limite)) = name
+    ...
+  }
+  {
+    # Clone for the second init
+  }
+
+Service Agence
+

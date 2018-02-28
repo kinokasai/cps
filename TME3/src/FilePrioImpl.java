@@ -3,6 +3,7 @@ import java.util.Set;
 
 public class FilePrioImpl<T> implements FilesPrio<T>{
 	private ArrayList<T> priorites;
+	private Set<Integer> activePrio;
 	@Override
 	public int getSize() {
 		// TODO Auto-generated method stub
@@ -18,25 +19,31 @@ public class FilePrioImpl<T> implements FilesPrio<T>{
 	@Override
 	public boolean isActive(int id) {
 		// TODO Auto-generated method stub
-		return (null!=priorites.get(id));
+		return activePrio.contains(id);
 	}
 
 	@Override
 	public Set<Integer> getActivePrios() {
 		// TODO Auto-generated method stub
-		return null;
+		return activePrio;
 	}
 
 	@Override
 	public int getMaxPrio() {
+	    Integer tmp = 0;
+	    for(Integer test : activePrio) {
+	        if(test>tmp) {
+	            tmp = test;
+	        }
+	    }
 		// TODO Auto-generated method stub
-		return 0;
+		return tmp ;
 	}
 
 	@Override
 	public int getSizePrio(int id) {
 		// TODO Auto-generated method stub
-		return 0;
+		return activePrio.size();
 	}
 
 	@Override
@@ -54,7 +61,7 @@ public class FilePrioImpl<T> implements FilesPrio<T>{
 	@Override
 	public T getElemPrio(int id, int elem_id) {
 		// TODO Auto-generated method stub
-		return null;
+		return priorites.get(id);
 	}
 
 	@Override
